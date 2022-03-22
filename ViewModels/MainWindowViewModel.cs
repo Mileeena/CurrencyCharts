@@ -5,42 +5,42 @@ using CurrencyCharts.Models;
 using CurrencyCharts.Views;
 using ScottPlot;
 using ScottPlot.Avalonia;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using LiveChartsCore;
+using LiveChartsCore.Defaults;
+using LiveChartsCore.SkiaSharpView;
 
 namespace CurrencyCharts.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public AvaPlot Chart { get; set; } = new AvaPlot();
+        // we have to let the chart know that the X axis in days.
+        public static Binance binance { get; set; } = new Binance("ETHUSDT", "15m");
+        public Axis[] XAxes { get; set; } = {
+            new()
+            {
+                LabelsRotation = 15,
+                Labeler = value => new DateTime((long)value).ToString("yyyy MMM dd"),
+                // set the unit width of the axis to "days"
+                // since our X axis is of type date time and 
+                // the interval between our points is in days
+                UnitWidth = binance.unitWidth.Ticks
+            }
+        };
+        public string symbol = "ETHUSDT";
+        public string interval = "15m";
+        public IEnumerable<ISeries> Series { get; set; } = new ObservableCollection<ISeries>
+        {
+            new CandlesticksSeries<FinancialPoint>
+            {
+                Values = binance?.pricesList
+            }
+        };
         public MainWindowViewModel()
         {
-            string symbol = "ETHUSDT";
-            string interval = "15m";
-            List<OHLC> pricesList = new Binance(symbol, interval).pricesList;
 
-            var candlePlot = Chart.Plot.AddCandlesticks(pricesList.ToArray());
-
-            Chart.Plot.XAxis.DateTimeFormat(true);
-            Chart.Plot.XAxis.PixelSnap(true);
-            Chart.Plot.XAxis.RulerMode(true);
-
-            //
-            Chart.Plot.Layout(padding: 12);
-            Chart.Plot.Style(figureBackground: Color.White, dataBackground: ColorTranslator.FromHtml("#151a1e"));
-            Chart.Plot.XAxis.TickLabelStyle(color: Color.Black);
-            Chart.Plot.XAxis.TickMarkColor(Color.Black);
-            Chart.Plot.XAxis.MajorGrid(color: ColorTranslator.FromHtml("#191e23"));
-
-            Chart.Plot.YAxis.Grid(false);
-            Chart.Plot.YAxis2.Grid(true);
-            Chart.Plot.YAxis2.TickLabelStyle(color: Color.Black);
-            Chart.Plot.YAxis2.TickMarkColor(Color.Black);
-            Chart.Plot.YAxis2.MajorGrid(color: ColorTranslator.FromHtml("#191e23"));
-
-            candlePlot.ColorDown = ColorTranslator.FromHtml("#ff005b");
-            candlePlot.ColorUp = ColorTranslator.FromHtml("#00d387");
-
-            Chart.Refresh();
-            Chart.Plot.SaveFig("finance_dateTimeAxis.png");
         }
     }
 }

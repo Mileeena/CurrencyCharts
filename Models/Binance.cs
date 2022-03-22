@@ -8,6 +8,7 @@ using ScottPlot;
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using LiveChartsCore.Defaults;
 
 namespace CurrencyCharts.Models
 {
@@ -15,8 +16,8 @@ namespace CurrencyCharts.Models
 
     public class Binance
     {
-        public List<OHLC> pricesList { get; set; }
-
+        public List<FinancialPoint> pricesList { get; set; }
+        public TimeSpan unitWidth { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -24,7 +25,7 @@ namespace CurrencyCharts.Models
         /// <param name="interval">Вреенной промежуток (5m)</param>
         public Binance(string symbol, string interval)
         {
-            pricesList = new List<OHLC>();
+            pricesList = new List<FinancialPoint>();
             string url = $"https://api.binance.com/api/v1/klines?symbol={symbol}&interval={interval}";
             var request = new GetRequest(url);
             request.Run();
@@ -44,7 +45,10 @@ namespace CurrencyCharts.Models
 
                 long tempTime = Convert.ToInt64(e[6].Double.ToString()) - Convert.ToInt64(e[0].Double.ToString());
                 double volue = e[8].Double;
-                pricesList.Add(new OHLC(open, high, low, close, timeStart, TimeSpan.FromMilliseconds(tempTime),volue));
+
+                unitWidth = TimeSpan.FromMilliseconds(tempTime);
+                //DateTime date, double high, double open, double close, double low
+                pricesList.Add(new FinancialPoint(timeStart, high, open, close, low));
             }
         }
 

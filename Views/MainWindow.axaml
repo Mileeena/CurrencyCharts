@@ -3,9 +3,10 @@
         xmlns:vm="using:CurrencyCharts.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
         xmlns:charting="http://schemas.stocksharp.com/xaml"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+        xmlns:vms="using:ViewModelsSamples.Financial.BasicCandlesticks"
         x:Class="CurrencyCharts.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="CurrencyCharts">
@@ -14,10 +15,11 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<Grid>
-		<ScottPlot:AvaPlot Content="{Binding Chart}"/>
-
-		<!--<ScottPlot:AvaPlot x:Name="Chart"/>-->
-    </Grid>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <lvc:CartesianChart Series="{Binding Series}" XAxes="{Binding XAxes}"></lvc:CartesianChart>
+  </Grid> 
 
 </Window>
