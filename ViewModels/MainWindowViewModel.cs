@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
+using Avalonia.Controls;
 using CurrencyCharts.Models;
+using CurrencyCharts.Views;
 using ScottPlot;
 using ScottPlot.Avalonia;
 
@@ -10,21 +10,20 @@ namespace CurrencyCharts.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public AvaPlot Chart { get; set; }
+        public AvaPlot Chart { get; set; } = new AvaPlot();
         public MainWindowViewModel()
         {
-            Chart = new AvaPlot();
-
             string symbol = "ETHUSDT";
             string interval = "15m";
             List<OHLC> pricesList = new Binance(symbol, interval).pricesList;
 
             var candlePlot = Chart.Plot.AddCandlesticks(pricesList.ToArray());
+
             Chart.Plot.XAxis.DateTimeFormat(true);
             Chart.Plot.XAxis.PixelSnap(true);
             Chart.Plot.XAxis.RulerMode(true);
 
-            // 
+            //
             Chart.Plot.Layout(padding: 12);
             Chart.Plot.Style(figureBackground: Color.White, dataBackground: ColorTranslator.FromHtml("#151a1e"));
             Chart.Plot.XAxis.TickLabelStyle(color: Color.Black);
@@ -40,6 +39,7 @@ namespace CurrencyCharts.ViewModels
             candlePlot.ColorDown = ColorTranslator.FromHtml("#ff005b");
             candlePlot.ColorUp = ColorTranslator.FromHtml("#00d387");
 
+            Chart.Refresh();
             Chart.Plot.SaveFig("finance_dateTimeAxis.png");
         }
     }

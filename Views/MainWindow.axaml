@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
+        xmlns:charting="http://schemas.stocksharp.com/xaml"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CurrencyCharts.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -14,9 +15,9 @@
     </Design.DataContext>
 
 	<Grid>
-        <ScottPlot:AvaPlot 
-            Name="Chart"
-            Content="{Binding Chart}"/>
-	</Grid>
+		<ScottPlot:AvaPlot Content="{Binding Chart}"/>
+
+		<!--<ScottPlot:AvaPlot x:Name="Chart"/>-->
+    </Grid>
 
 </Window>
