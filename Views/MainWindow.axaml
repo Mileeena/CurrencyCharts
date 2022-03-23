@@ -16,10 +16,55 @@
     </Design.DataContext>
 
   <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
-    <lvc:CartesianChart Series="{Binding Series}" XAxes="{Binding XAxes}"></lvc:CartesianChart>
+	  <Grid.RowDefinitions>
+		  <RowDefinition Height="45"/>
+		  <RowDefinition Height="*"/>
+	  </Grid.RowDefinitions>
+
+	  <ComboBox Items="{Binding Currency}"
+				Grid.Row="0"
+				HorizontalAlignment="Left" 
+				Margin="10,0,0,0" 
+				VerticalAlignment="Center" 
+				Width="120" 
+				Height="30"
+				SelectedItem="{Binding symbol}"/>
+	  <!--SelectionChanged="{Binding SelectionChanged}"-->
+	  <ComboBox Items="{Binding TimeIntervals}"
+				Grid.Row="0"
+				HorizontalAlignment="Left" 
+				Margin="150,0,0,0" 
+				VerticalAlignment="Center" 
+				Width="120" 
+				Height="30"
+				SelectedItem="{Binding interval}"/>
+	  
+	  <Button	Content="Update"
+				Grid.Row="0"
+				Command="{Binding Click}"
+				HorizontalAlignment="Left"
+				Margin="290,0,0,0"
+				VerticalAlignment="Center"
+				Width="120"
+				Height="30"/>
+
+	  <lvc:CartesianChart
+		  AutoUpdateEnabled="True"
+		  Name="chart"
+		  Grid.Row="1"
+		  ZoomMode="Both"
+		  Background="#151a1e"
+		  Series="{Binding Series}"
+		  XAxes="{Binding XAxes}">
+	  </lvc:CartesianChart>
+
   </Grid> 
 
 </Window>
+
+<!--
+свеча вниз #ff005b
+свеча вверх #00d387
+фон #151a1e
+линии фона #181d22 или #191e23
+-->

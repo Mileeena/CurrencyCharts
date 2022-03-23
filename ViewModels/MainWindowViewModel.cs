@@ -1,62 +1,137 @@
 using System.Collections.Generic;
-using System.Drawing;
-using Avalonia.Controls;
 using CurrencyCharts.Models;
-using CurrencyCharts.Views;
-using ScottPlot;
-using ScottPlot.Avalonia;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
+using System.Drawing;
+using LiveChartsCore.Kernel.Sketches;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using System.Windows.Input;
+using ReactiveUI;
+using System.ComponentModel;
 
 namespace CurrencyCharts.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        // we have to let the chart know that the X axis in days.
-        public static Binance binance { get; set; } = new Binance("ETHUSDT", "15m");
-        public Axis[] XAxes { get; set; } = {
-            new()
+        public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand SelectionChanged { get; }
+        public ICommand Click { get; }
+        List<string> TimeIntervals { get; set; } = new List<string> { "1m", "3m", "5m", "15m", "30m", "1h", "2h", "4h",
+                                                                        "6h", "8h", "12h", "1d", "3d", "1w", "1M", };
+        List<string> Currency { get; set; } = new List<string> { "ETHUSDT", "BSWUSDT" };
+
+        public static string symbol { get; set; } = "ETHUSDT";
+        public static string interval { get; set; } = "1m";
+        public static Binance binance { get; set; } = new Binance(symbol, interval);
+
+        private IEnumerable<ISeries> series;
+        public IEnumerable<ISeries> Series 
+        {   get => series;
+            set
             {
-                LabelsRotation = 15,
-                Labeler = value => new DateTime((long)value).ToString("yyyy MMM dd"),
-                // set the unit width of the axis to "days"
-                // since our X axis is of type date time and 
-                // the interval between our points is in days
-                UnitWidth = binance.unitWidth.Ticks
+                series = value;
+                OnPropertyChanged(nameof(Series));
             }
-        };
-        public string symbol = "ETHUSDT";
-        public string interval = "15m";
-        public IEnumerable<ISeries> Series { get; set; } = new ObservableCollection<ISeries>
+        }
+        private IEnumerable<ICartesianAxis> xAxes;
+        public IEnumerable<ICartesianAxis> XAxes
         {
-            new CandlesticksSeries<FinancialPoint>
+            get => xAxes;
+            set
+            {
+                xAxes = value;
+                OnPropertyChanged(nameof(XAxes));
+            }
+        }
+        private void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public MainWindowViewModel()
+        {
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    LabelsRotation = 15,
+                Labeler = value => new DateTime((long)value).ToString("yyyy MMM dd"),
+                UnitWidth = binance.unitWidth.Ticks
+                }
+            };
+            Series = new ObservableCollection<ISeries>
+            {
+                 new CandlesticksSeries<FinancialPoint>
             {
                 Values = binance?.pricesList
             }
-        };
-        public MainWindowViewModel()
-        {
+            };
 
+            SelectionChanged = ReactiveCommand.Create(() =>
+            {
+                int a = 5;
+            });
+
+            Click = ReactiveCommand.Create(() =>
+            {
+                try
+                {
+                    binance = new Binance(symbol, interval);
+                    XAxes = new Axis[]
+                    {
+                    new Axis
+                    {
+                    LabelsRotation = 15,
+                    Labeler = value => new DateTime((long)value).ToString("yyyy MMM dd"),
+                    UnitWidth = binance.unitWidth.Ticks
+                    }
+                    };
+                    Series = new ObservableCollection<ISeries>
+                     {
+                     new CandlesticksSeries<FinancialPoint>
+                     {
+                    Values = binance?.pricesList
+                      }
+                     };
+                }
+                catch (Exception e)
+                {
+
+                }
+            });
         }
     }
 }
 
-    //Х    1m     // 1 минута
-    //Х    3m     // 3 минуты
-    //Х    5m    // 5 минут
-    //Х    15m  // 15 минут
-    //Х    30m    // 30 минут
-    //Х    1h    // 1 час
-    //Х    2h    // 2 часа
-    //Х    4h    // 4 часа
-    //Х    6h    // 6 часов
-    //Х    8h    // 8 часов
-    //Х    12h    // 12 часов
-    //Х    1d    // 1 день
-    //Х    3d    // 3 дн€
-    //Х    1w    // 1 недел€
-    //Х    1M    // 1 мес€ц
+//XAxes = new List<Axis>
+//{
+//    new Axis
+//    {
+//        Labeler = value => new DateTime((long)value).ToString("MM/dd/yy"),
+//        UnitWidth = TimeSpan.FromDays(1).Ticks
+//    }
+//};
+
+//Series = new ObservableCollection<ISeries>
+//{
+//    new LineSeries<DateTimePoint>
+//    {
+//        Name = "Close",
+//        Values = _observableCloseValues,
+//        Fill = null,
+//        GeometrySize = 8,
+//        TooltipLabelFormatter = point => $"Last: {point.Model!.Value:F2} on {point.Model!.DateTime.ToString("d")}"
+//    },
+//    new LineSeries<DateTimePoint>
+//    {
+//        Name = "14 Day SMA",
+//        Values = _observableSma,
+//        Fill = null,
+//        GeometrySize = 4,
+//        TooltipLabelFormatter = point => $"SMA: {point.Model!.Value:F2}"
+//    }
+//};

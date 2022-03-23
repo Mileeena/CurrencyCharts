@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CurrencyCharts.ViewModels
 {
-    public class ViewModelBase : ReactiveObject
+    public class ViewModelBase : ReactiveObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
