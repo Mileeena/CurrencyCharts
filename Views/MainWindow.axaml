@@ -38,16 +38,8 @@
 				VerticalAlignment="Center" 
 				Width="120" 
 				Height="30"
-				SelectedItem="{Binding interval}"/>
-	  
-	  <Button	Content="Update"
-				Grid.Row="0"
-				Command="{Binding UpdateCommand}"
-				HorizontalAlignment="Left"
-				Margin="290,0,0,0"
-				VerticalAlignment="Center"
-				Width="120"
-				Height="30"/>
+				SelectedItem="{Binding interval}"
+				SelectionChanged="SelectionChanged"/>
 
 	  <lvc:CartesianChart
 		  AutoUpdateEnabled="True"

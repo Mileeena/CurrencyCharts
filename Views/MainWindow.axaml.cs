@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Selection;
 using Avalonia.Markup.Xaml;
+using CurrencyCharts.ViewModels;
 
 namespace CurrencyCharts.Views
 {
@@ -15,10 +16,11 @@ namespace CurrencyCharts.Views
         {
             AvaloniaXamlLoader.Load(this);
         }
-
-        public void SelectionChanged()
+        public void SelectionChanged(object? sender, SelectionChangedEventArgs selectionChangedEventArgs)
         {
-            
+            ViewModel.NewChart();
         }
+
+        MainWindowViewModel ViewModel => DataContext as MainWindowViewModel;
     }
 }

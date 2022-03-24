@@ -9,13 +9,14 @@ using System.Windows.Input;
 using ReactiveUI;
 using System.ComponentModel;
 using Avalonia.Controls.Selection;
+using Avalonia.Controls;
+using System;
 
 namespace CurrencyCharts.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public ICommand UpdateCommand { get; }
         List<string> TimeIntervals { get; set; } = new List<string> { "1m", "3m", "5m", "15m", "30m", "1h", "2h", "4h",
                                                                         "6h", "8h", "12h", "1d", "3d", "1w", "1M", };
         List<string> Currency { get; set; } = new List<string> { "BTCUSDT", "ETHUSDT", "BNBUSDT", "BSWUSDT", "XRPUSDT", "DOGEUSDT",
@@ -23,11 +24,6 @@ namespace CurrencyCharts.ViewModels
         public string symbol { get; set; } = "ETHUSDT";
         public string interval { get; set; } = "1m";
         public Binance binance { get; set; }
-
-        //public void SelectionChanged(object sender, SelectionModelSelectionChangedEventArgs e)
-        //{
-        //    NewChart(symbol, interval);
-        //}
 
         private IEnumerable<ISeries> series;
         public IEnumerable<ISeries> Series 
@@ -53,17 +49,17 @@ namespace CurrencyCharts.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private void NewChart(string _symbol, string _interval)
+        public void NewChart()
         {
-            binance = new Binance(_symbol, _interval);
+            binance = new Binance(symbol, interval);
 
             XAxes = new List<Axis>
             {
                     new Axis
                     {
-                        //LabelsRotation = 15,
-                        Labels = binance.candleTime,
-                        //Labeler = value => new DateTime((long)value).ToString("yyyy MMM dd"),
+                        LabelsRotation = 15,
+                        //Labels = binance.candleTime,
+                        Labeler = value => new DateTime((long)value).ToString("yyyy MMM dd"),
                         UnitWidth = binance.unitWidth.Ticks
                     }
             };
@@ -80,12 +76,7 @@ namespace CurrencyCharts.ViewModels
 
         public MainWindowViewModel()
         {
-            NewChart(symbol,interval);
 
-            UpdateCommand = ReactiveCommand.Create(() =>
-            {
-                NewChart(symbol, interval);
-            });
         }
     }
 }
