@@ -1,6 +1,6 @@
 using Avalonia.Controls;
+using Avalonia.Controls.Selection;
 using Avalonia.Markup.Xaml;
-using System;
 
 namespace CurrencyCharts.Views
 {
@@ -9,10 +9,16 @@ namespace CurrencyCharts.Views
         public MainWindow()
         {
             InitializeComponent();
+            
         }
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+        }
+
+        public void SelectionChanged()
+        {
+            
         }
     }
 }

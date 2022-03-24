@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Avalonia.Controls;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ScottPlot;
-using System;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using LiveChartsCore.Defaults;
 
 namespace CurrencyCharts.Models
@@ -17,6 +12,7 @@ namespace CurrencyCharts.Models
     public class Binance
     {
         public List<FinancialPoint> pricesList { get; set; }
+        public List<string> candleTime { get; set; }
         public TimeSpan unitWidth { get; set; }
         /// <summary>
         /// 
@@ -26,6 +22,7 @@ namespace CurrencyCharts.Models
         public Binance(string symbol, string interval)
         {
             pricesList = new List<FinancialPoint>();
+            candleTime = new List<string>();
             string url = $"https://api.binance.com/api/v1/klines?symbol={symbol}&interval={interval}";
             var request = new GetRequest(url);
             request.Run();
@@ -49,6 +46,7 @@ namespace CurrencyCharts.Models
                 unitWidth = TimeSpan.FromMilliseconds(tempTime);
                 //DateTime date, double high, double open, double close, double low
                 pricesList.Add(new FinancialPoint(timeStart, high, open, close, low));
+                candleTime.Add($"{timeStart:U}");
             }
         }
 

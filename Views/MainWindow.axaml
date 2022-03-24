@@ -28,8 +28,9 @@
 				VerticalAlignment="Center" 
 				Width="120" 
 				Height="30"
-				SelectedItem="{Binding symbol}"/>
-	  <!--SelectionChanged="{Binding SelectionChanged}"-->
+				SelectedItem="{Binding symbol}"
+				SelectionChanged="SelectionChanged"/>
+	  
 	  <ComboBox Items="{Binding TimeIntervals}"
 				Grid.Row="0"
 				HorizontalAlignment="Left" 
@@ -41,7 +42,7 @@
 	  
 	  <Button	Content="Update"
 				Grid.Row="0"
-				Command="{Binding Click}"
+				Command="{Binding UpdateCommand}"
 				HorizontalAlignment="Left"
 				Margin="290,0,0,0"
 				VerticalAlignment="Center"

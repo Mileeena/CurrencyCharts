@@ -1,32 +1,33 @@
 using System.Collections.Generic;
 using CurrencyCharts.Models;
-using System;
 using System.Collections.ObjectModel;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
-using System.Drawing;
 using LiveChartsCore.Kernel.Sketches;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
 using System.Windows.Input;
 using ReactiveUI;
 using System.ComponentModel;
+using Avalonia.Controls.Selection;
 
 namespace CurrencyCharts.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public ICommand SelectionChanged { get; }
-        public ICommand Click { get; }
+        public ICommand UpdateCommand { get; }
         List<string> TimeIntervals { get; set; } = new List<string> { "1m", "3m", "5m", "15m", "30m", "1h", "2h", "4h",
                                                                         "6h", "8h", "12h", "1d", "3d", "1w", "1M", };
-        List<string> Currency { get; set; } = new List<string> { "ETHUSDT", "BSWUSDT" };
+        List<string> Currency { get; set; } = new List<string> { "BTCUSDT", "ETHUSDT", "BNBUSDT", "BSWUSDT", "XRPUSDT", "DOGEUSDT",
+                                                                    "CAKEUSDT", "MINAUSDT","1INCHUSDT","BIFIUSDT"};
+        public string symbol { get; set; } = "ETHUSDT";
+        public string interval { get; set; } = "1m";
+        public Binance binance { get; set; }
 
-        public static string symbol { get; set; } = "ETHUSDT";
-        public static string interval { get; set; } = "1m";
-        public static Binance binance { get; set; } = new Binance(symbol, interval);
+        //public void SelectionChanged(object sender, SelectionModelSelectionChangedEventArgs e)
+        //{
+        //    NewChart(symbol, interval);
+        //}
 
         private IEnumerable<ISeries> series;
         public IEnumerable<ISeries> Series 
@@ -52,56 +53,38 @@ namespace CurrencyCharts.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public MainWindowViewModel()
+        private void NewChart(string _symbol, string _interval)
         {
-            XAxes = new Axis[]
-            {
-                new Axis
-                {
-                    LabelsRotation = 15,
-                Labeler = value => new DateTime((long)value).ToString("yyyy MMM dd"),
-                UnitWidth = binance.unitWidth.Ticks
-                }
-            };
-            Series = new ObservableCollection<ISeries>
-            {
-                 new CandlesticksSeries<FinancialPoint>
-            {
-                Values = binance?.pricesList
-            }
-            };
+            binance = new Binance(_symbol, _interval);
 
-            SelectionChanged = ReactiveCommand.Create(() =>
+            XAxes = new List<Axis>
             {
-                int a = 5;
-            });
-
-            Click = ReactiveCommand.Create(() =>
-            {
-                try
-                {
-                    binance = new Binance(symbol, interval);
-                    XAxes = new Axis[]
-                    {
                     new Axis
                     {
-                    LabelsRotation = 15,
-                    Labeler = value => new DateTime((long)value).ToString("yyyy MMM dd"),
-                    UnitWidth = binance.unitWidth.Ticks
+                        //LabelsRotation = 15,
+                        Labels = binance.candleTime,
+                        //Labeler = value => new DateTime((long)value).ToString("yyyy MMM dd"),
+                        UnitWidth = binance.unitWidth.Ticks
                     }
-                    };
-                    Series = new ObservableCollection<ISeries>
-                     {
+            };
+
+            Series = new ObservableCollection<ISeries>
+                {
                      new CandlesticksSeries<FinancialPoint>
                      {
-                    Values = binance?.pricesList
-                      }
-                     };
-                }
-                catch (Exception e)
-                {
+                        
+                        Values = binance?.pricesList
+                     }
+                };
+        }
 
-                }
+        public MainWindowViewModel()
+        {
+            NewChart(symbol,interval);
+
+            UpdateCommand = ReactiveCommand.Create(() =>
+            {
+                NewChart(symbol, interval);
             });
         }
     }
