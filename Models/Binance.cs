@@ -46,6 +46,8 @@ namespace CurrencyCharts.Models
                 unitWidth = TimeSpan.FromMilliseconds(tempTime);
                 //DateTime date, double high, double open, double close, double low
                 pricesList.Add(new FinancialPoint(timeStart, high, open, close, low));
+
+                //candleTime.Add(timeStart.ToString("yyyy MMM dd"));
                 candleTime.Add($"{timeStart:U}");
             }
         }

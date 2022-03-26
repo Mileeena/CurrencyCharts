@@ -6,6 +6,7 @@
         xmlns:charting="http://schemas.stocksharp.com/xaml"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+		xmlns:gif="clr-namespace:AvaloniaGif;assembly=AvaloniaGif"
         xmlns:vms="using:ViewModelsSamples.Financial.BasicCandlesticks"
         x:Class="CurrencyCharts.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -21,25 +22,35 @@
 		  <RowDefinition Height="*"/>
 	  </Grid.RowDefinitions>
 
-	  <ComboBox Items="{Binding Currency}"
+	  <ComboBox Name="CurrencyComboBox"
+				Items="{Binding Currency}"
 				Grid.Row="0"
 				HorizontalAlignment="Left" 
 				Margin="10,0,0,0" 
 				VerticalAlignment="Center" 
 				Width="120" 
 				Height="30"
-				SelectedItem="{Binding symbol}"
-				SelectionChanged="SelectionChanged"/>
+				SelectedItem="{Binding Symbol}"/>
 	  
-	  <ComboBox Items="{Binding TimeIntervals}"
+	  <ComboBox Name="TimeIntervalsComboBox"
+				Items="{Binding TimeIntervals}"
 				Grid.Row="0"
 				HorizontalAlignment="Left" 
 				Margin="150,0,0,0" 
 				VerticalAlignment="Center" 
 				Width="120" 
 				Height="30"
-				SelectedItem="{Binding interval}"
-				SelectionChanged="SelectionChanged"/>
+				SelectedItem="{Binding Interval}"	/>
+
+<!--
+	  <gif:GifImage
+					Stretch="None"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					RenderOptions.BitmapInterpolationMode="Default"
+					SourceUri="/Assets/spongebob.gif">
+	  </gif:GifImage>
+-->
 
 	  <lvc:CartesianChart
 		  AutoUpdateEnabled="True"
