@@ -7,8 +7,6 @@ using LiveChartsCore.Defaults;
 
 namespace CurrencyCharts.Models
 {
-    ///https://api3.binance.com/api/v3/aggTrades?symbol=USDTRUB
-
     public class Binance
     {
         public List<FinancialPoint> pricesList { get; set; }
@@ -18,7 +16,7 @@ namespace CurrencyCharts.Models
         /// 
         /// </summary>
         /// <param name="symbol">Имя пары на Binance (ETHUSDT)</param>
-        /// <param name="interval">Вреенной промежуток (5m)</param>
+        /// <param name="interval">Временной промежуток (5m)</param>
         public Binance(string symbol, string interval)
         {
             pricesList = new List<FinancialPoint>();
@@ -44,7 +42,7 @@ namespace CurrencyCharts.Models
                 double volue = e[8].Double;
 
                 unitWidth = TimeSpan.FromMilliseconds(tempTime);
-                //DateTime date, double high, double open, double close, double low
+
                 pricesList.Add(new FinancialPoint(timeStart, high, open, close, low));
 
                 //candleTime.Add(timeStart.ToString("yyyy MMM dd"));

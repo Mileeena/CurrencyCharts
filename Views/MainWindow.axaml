@@ -6,7 +6,6 @@
         xmlns:charting="http://schemas.stocksharp.com/xaml"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
-		xmlns:gif="clr-namespace:AvaloniaGif;assembly=AvaloniaGif"
         xmlns:vms="using:ViewModelsSamples.Financial.BasicCandlesticks"
         x:Class="CurrencyCharts.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -16,59 +15,35 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-  <Grid>
+  <Grid Classes="MainGrid">
 	  <Grid.RowDefinitions>
-		  <RowDefinition Height="45"/>
+		  <RowDefinition Height="55"/>
 		  <RowDefinition Height="*"/>
 	  </Grid.RowDefinitions>
 
-	  <ComboBox Name="CurrencyComboBox"
+	  <ComboBox Classes="SettingsStyle SettingsStyleCurrency"
 				Items="{Binding Currency}"
 				Grid.Row="0"
 				HorizontalAlignment="Left" 
-				Margin="10,0,0,0" 
-				VerticalAlignment="Center" 
-				Width="120" 
-				Height="30"
+				VerticalAlignment="Center"
+				Margin="10,0,5,0"  
 				SelectedItem="{Binding Symbol}"/>
 	  
-	  <ComboBox Name="TimeIntervalsComboBox"
+	  <ComboBox Classes="SettingsStyle SettingsStyleTimeIntervals"
 				Items="{Binding TimeIntervals}"
 				Grid.Row="0"
-				HorizontalAlignment="Left" 
-				Margin="150,0,0,0" 
+				HorizontalAlignment="Left"
 				VerticalAlignment="Center" 
-				Width="120" 
-				Height="30"
-				SelectedItem="{Binding Interval}"	/>
-
-<!--
-	  <gif:GifImage
-					Stretch="None"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					RenderOptions.BitmapInterpolationMode="Default"
-					SourceUri="/Assets/spongebob.gif">
-	  </gif:GifImage>
--->
-
+				Margin="170,0,5,0"
+				SelectedItem="{Binding Interval}"/>
+	  
 	  <lvc:CartesianChart
 		  AutoUpdateEnabled="True"
-		  Name="chart"
 		  Grid.Row="1"
 		  ZoomMode="Both"
-		  Background="#151a1e"
+		  Background="#151A1E"
 		  Series="{Binding Series}"
 		  XAxes="{Binding XAxes}">
 	  </lvc:CartesianChart>
-
   </Grid> 
-
 </Window>
-
-<!--
-свеча вниз #ff005b
-свеча вверх #00d387
-фон #151a1e
-линии фона #181d22 или #191e23
--->
