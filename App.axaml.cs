@@ -6,7 +6,7 @@ using CurrencyCharts.Views;
 
 namespace CurrencyCharts
 {
-    public partial class App : Application
+    public class App : Application
     {
         public override void Initialize()
         {
