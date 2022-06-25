@@ -1,8 +1,6 @@
-# CurrencyCharts - Парсинг графика курса валют с Binance
+# CurrencyCharts - Парсинг графика курса валют
 
-<div id="header" align="center">
-  <img src="https://user-images.githubusercontent.com/61462657/160230668-f7c31728-7be8-4bbb-9326-64c1abace34f.gif" width="800"/>
-</div>
+<video src="https://user-images.githubusercontent.com/61462657/175758477-ec25e559-6a50-48a8-be94-11a8449d2061.mp4" ></video>
 
 ## :hammer_and_wrench: Технологии
 <div>
