@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace CurrencyCharts.Views
+namespace CurrencyCharts.View
 {
     public partial class MainWindow : Window
     {

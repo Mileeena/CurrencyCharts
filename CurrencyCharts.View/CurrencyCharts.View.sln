@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyCharts.View", "CurrencyCharts.View\CurrencyCharts.View.csproj", "{C797AE65-6D2D-4EF6-B9D9-E41B63C920A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyCharts.ViewModel", "..\CurrencyChartsю.ViewModel\CurrencyCharts.ViewModel.csproj", "{1DAB9279-9E55-4CFE-90E2-26B45CEC8CCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyCharts.Data", "..\CurrencyCharts.Data\CurrencyCharts.Data.csproj", "{CB5217B1-7B81-49FE-98BE-DC114305A805}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C797AE65-6D2D-4EF6-B9D9-E41B63C920A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C797AE65-6D2D-4EF6-B9D9-E41B63C920A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C797AE65-6D2D-4EF6-B9D9-E41B63C920A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C797AE65-6D2D-4EF6-B9D9-E41B63C920A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DAB9279-9E55-4CFE-90E2-26B45CEC8CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DAB9279-9E55-4CFE-90E2-26B45CEC8CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DAB9279-9E55-4CFE-90E2-26B45CEC8CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DAB9279-9E55-4CFE-90E2-26B45CEC8CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB5217B1-7B81-49FE-98BE-DC114305A805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB5217B1-7B81-49FE-98BE-DC114305A805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB5217B1-7B81-49FE-98BE-DC114305A805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB5217B1-7B81-49FE-98BE-DC114305A805}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE7A9243-E50A-4A45-8CCC-43E42FA240C1}
+	EndGlobalSection
+EndGlobal

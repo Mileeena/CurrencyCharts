@@ -1,10 +1,9 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using CurrencyCharts.ViewModels;
-using CurrencyCharts.Views;
+using CurrencyCharts.ViewModel;
 
-namespace CurrencyCharts
+namespace CurrencyCharts.View
 {
     public class App : Application
     {

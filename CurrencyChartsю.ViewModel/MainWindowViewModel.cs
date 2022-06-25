@@ -1,26 +1,16 @@
-using System;
-using System.Collections.Generic;
-using CurrencyCharts.Models;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.Kernel.Sketches;
-using System.Windows.Input;
-using ReactiveUI;
-using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
+using CurrencyCharts.Data;
+using PropertyChanged;
 
-namespace CurrencyCharts.ViewModels
+namespace CurrencyCharts.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class MainWindowViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
 
         List<string> TimeIntervals { get; set; } = new List<string> { "1m", "3m", "5m", "15m", "30m", "1h", "2h", "4h",
                                                                         "6h", "8h", "12h", "1d", "3d", "1w", "1M", };
@@ -37,7 +27,6 @@ namespace CurrencyCharts.ViewModels
             set
             {
                 symbol = value;
-                OnPropertyChanged(nameof(Symbol));
                 if (Interval != null)
                 {
                     NewChartAsync();
@@ -50,7 +39,6 @@ namespace CurrencyCharts.ViewModels
             set
             {
                 interval = value;
-                OnPropertyChanged(nameof(Interval));
                 if (Interval != null)
                 {
                     NewChartAsync();
@@ -58,26 +46,8 @@ namespace CurrencyCharts.ViewModels
             }
         }
 
-        private IEnumerable<ISeries> series;
-        private IEnumerable<ICartesianAxis> xAxes;
-
-        public IEnumerable<ISeries> Series 
-        {   get => series;
-            set
-            {
-                series = value;
-                OnPropertyChanged(nameof(Series));
-            }
-        }
-        public IEnumerable<ICartesianAxis> XAxes
-        {
-            get => xAxes;
-            set
-            {
-                xAxes = value;
-                OnPropertyChanged(nameof(XAxes));
-            }
-        }
+        public IEnumerable<ISeries> Series { get; set; }
+        public IEnumerable<ICartesianAxis> XAxes { get; set; }
 
         public void NewChart()
         {

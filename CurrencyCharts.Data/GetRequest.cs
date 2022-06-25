@@ -1,7 +1,6 @@
-﻿using System.IO;
-using System.Net;
+﻿using System.Net;
 
-namespace CurrencyCharts.Models
+namespace CurrencyCharts.Data
 {
     public class GetRequest
     {

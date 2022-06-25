@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avalonia="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
+        xmlns:viewModel="clr-namespace:CurrencyCharts.ViewModel;assembly=CurrencyCharts.ViewModel"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="CurrencyCharts.View.MainWindow"
+        Title="CurrencyCharts">
+
+    <Design.DataContext>
+        <viewModel:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid Classes="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ComboBox Classes="SettingsStyle SettingsStyleCurrency"
+                  Items="{Binding Currency}"
+                  Grid.Row="0"
+                  HorizontalAlignment="Left" 
+                  VerticalAlignment="Center"
+                  Margin="10,0,5,0"  
+                  SelectedItem="{Binding Symbol}"/>
+	  
+        <ComboBox Classes="SettingsStyle SettingsStyleTimeIntervals"
+                  Items="{Binding TimeIntervals}"
+                  Grid.Row="0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center" 
+                  Margin="170,0,5,0"
+                  SelectedItem="{Binding Interval}"/>
+
+        <avalonia:CartesianChart
+            Grid.Row="1"
+            ZoomMode="Both"
+            Background="#e0fef4"
+            Series="{Binding Series}"
+            XAxes="{Binding XAxes}">
+        </avalonia:CartesianChart>
+    </Grid> 
+</Window>
