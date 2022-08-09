@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-beta.101" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.1" />
-    <PackageReference Include="ReactiveUI" Version="18.2.5" />
+    <PackageReference Include="ReactiveUI" Version="18.3.1" />
   </ItemGroup>
 
   <ItemGroup>
